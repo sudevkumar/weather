@@ -8,12 +8,13 @@ import { format, parseISO } from "date-fns";
 import CommonContainer from "@/components/CommonContainer";
 import { toCelSius } from "@/utils/toCelSius";
 import WeatherIcon from "@/components/WeatherIcon";
-// import { FaEye, FaWind } from "react-icons/fa";
+import { FaEye, FaWind } from "react-icons/fa";
 import { IoWaterOutline, IoSpeedometerOutline } from "react-icons/io5";
 import { FiSunrise, FiSunset } from "react-icons/fi";
 import { useCityContext } from "../context/city";
 import { convertToTime } from "@/utils/convertToTime";
 import { useEffect } from "react";
+import { metersToKilometers } from "@/utils/metersToKilometers";
 
 interface WeatherDetail {
   dt: number;
@@ -187,9 +188,11 @@ export default function Home() {
             <div className="flex gap-2 sm:gap-6 overflow-x-auto w-full justify-between ">
               <div className=" bg-green-300/80 w-[200px] flex flex-col justify-between items-center p-3 rounded-md mb-2">
                 <p className=" font-bold text-sm">Visibility</p>
-                <span>{/* <FaEye className=" text-xl sm:text-3xl " /> */}</span>
+                <span>
+                  <FaEye className=" text-xl sm:text-3xl " />{" "}
+                </span>
                 <p className=" font-bold">
-                  {data?.list[0]?.visibility / 1000}Km
+                  {metersToKilometers(data?.list[0]?.visibility ?? 10000)}
                 </p>
               </div>
 
@@ -275,9 +278,12 @@ export default function Home() {
                   <div className=" isolate text-white bg-green-300/60 w-[200px] flex flex-col justify-between items-center p-3 rounded-md mb-2 shadow-lg ring-1 ring-black/5">
                     <p className=" font-bold text-sm">Visibility</p>
                     <span>
-                      {/* <FaEye className=" text-xl sm:text-3xl " /> */}
+                      <FaEye className=" text-xl sm:text-3xl " />
                     </span>
-                    <p className=" font-bold">{ele?.visibility / 1000}Km</p>
+                    <p className=" font-bold">
+                      {/* {ele?.visibility / 1000}K */}
+                      {metersToKilometers(ele.visibility ?? 10000)}
+                    </p>
                   </div>
 
                   <div className=" bg-red-300/50 w-[200px] flex flex-col justify-between items-center p-3 rounded-md mb-2 shadow-lg ring-1 ring-black/5 text-white">
