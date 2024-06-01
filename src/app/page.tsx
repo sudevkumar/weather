@@ -226,7 +226,7 @@ export default function Home() {
                   <FiSunrise className=" text-xl sm:text-3xl " />
                 </span>
                 <p className=" font-bold">
-                  {convertToTime(data?.city?.sunrise)}
+                  {convertToTime(data?.city?.sunrise ?? 1702949452)}
                 </p>
               </div>
 
@@ -236,7 +236,7 @@ export default function Home() {
                   <FiSunset className=" text-xl sm:text-3xl " />
                 </span>
                 <p className=" font-bold">
-                  {convertToTime(data?.city?.sunset)}
+                  {convertToTime(data?.city?.sunset ?? 1702517657)}
                 </p>
               </div>
             </div>
