@@ -282,7 +282,7 @@ export default function Home() {
                     </span>
                     <p className=" font-bold">
                       {/* {ele?.visibility / 1000}K */}
-                      {metersToKilometers(ele.visibility ?? 10000)}
+                      {metersToKilometers(ele?.visibility ?? 10000)}
                     </p>
                   </div>
 
