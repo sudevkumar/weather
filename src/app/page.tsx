@@ -15,6 +15,7 @@ import { useCityContext } from "../context/city";
 import { convertToTime } from "@/utils/convertToTime";
 import { useEffect } from "react";
 import { metersToKilometers } from "@/utils/metersToKilometers";
+import { setBG } from "@/utils/setBG";
 
 interface WeatherDetail {
   dt: number;
@@ -86,6 +87,8 @@ export default function Home() {
     }
   );
 
+  console.log(data);
+
   useEffect(() => {
     refetch();
   }, [cities, refetch]);
@@ -117,7 +120,11 @@ export default function Home() {
   if (error) return "Somthing went wrong!";
 
   return (
-    <div className=" flex flex-col gap-4 min-h-screen bg-gray-100 bg-[url('https://images.unsplash.com/photo-1475116127127-e3ce09ee84e1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
+    <div
+      className={`flex flex-col gap-4 min-h-screen bg-gray-100 bg-cover ${setBG(
+        data?.list[0]?.weather[0].description
+      )}`}
+    >
       <Navbar location={data?.city?.name} />
       <main className=" px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-4 ">
         {/* Today Section */}
@@ -207,7 +214,7 @@ export default function Home() {
               <div className=" bg-blue-300/80 w-[200px] flex flex-col justify-between items-center p-3 rounded-md mb-2">
                 <p className=" font-bold text-sm">Speed</p>
                 <span>
-                  {/* <FaWind className=" text-xl sm:text-3xl " /> */}
+                  <FaWind className=" text-xl sm:text-3xl " />
                 </span>
                 <p className=" font-bold">{data?.list[0]?.wind.speed}km/h</p>
               </div>
@@ -249,7 +256,7 @@ export default function Home() {
             Next 5 days Forcast
           </p>
           {firstDAteForEachDate.map((ele, ind) => {
-            console.log(ele);
+            // console.log(ele);
             return (
               <div
                 className=" flex gap-4 h-[100px] w-full sm:w-[80%] m-auto sm:h-auto"
@@ -268,7 +275,7 @@ export default function Home() {
                       {toCelSius(ele?.main?.temp_min ?? 296.37)}↓°
                     </span>
                     <span className=" text-red-500">
-                      {toCelSius(ele?.main?.temp_max ?? 296.37)}↑°
+                      {toCelSius(ele?.main?.temp_max ?? 296.38)}↑°
                     </span>
                   </p>
                 </CommonContainer>
@@ -281,7 +288,6 @@ export default function Home() {
                       <FaEye className=" text-xl sm:text-3xl " />
                     </span>
                     <p className=" font-bold">
-                      {/* {ele?.visibility / 1000}K */}
                       {metersToKilometers(ele?.visibility ?? 10000)}
                     </p>
                   </div>
@@ -297,7 +303,7 @@ export default function Home() {
                   <div className=" bg-blue-300/50 w-[200px] flex flex-col justify-between items-center p-3 rounded-md mb-2 shadow-lg ring-1 ring-black/5 text-white">
                     <p className=" font-bold text-sm">Speed</p>
                     <span>
-                      {/* <FaWind className=" text-xl sm:text-3xl " /> */}
+                      <FaWind className=" text-xl sm:text-3xl " />
                     </span>
                     <p className=" font-bold">{ele?.wind.speed}km/h</p>
                   </div>
@@ -318,3 +324,17 @@ export default function Home() {
     </div>
   );
 }
+
+// ${
+//   data?.list[0]?.weather[0].description === "broken clouds"
+//     ? "bg-[url('https://images.unsplash.com/photo-1655386045010-35f000a872a0?q=80&w=3348&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]"
+//     : data?.list[0]?.weather[0].description === "scattered clouds"
+//     ? "bg-[url('https://images.unsplash.com/photo-1502723208559-c93671464db7?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]"
+//     : data?.list[0]?.weather[0].description === "heavy intensity rain"
+//     ? "bg-[url('https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?q=80&w=2448&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]"
+//     : data?.list[0]?.weather[0].description === "light rain"
+//     ? "bg-[url('https://images.unsplash.com/photo-1428592953211-077101b2021b?q=80&w=3348&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]"
+//     : data?.list[0]?.weather[0].description === "overcast clouds"
+//     ? "bg-[url('https://images.unsplash.com/photo-1499956827185-0d63ee78a910?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]"
+//     : "https://images.unsplash.com/photo-1519904189233-82ac444495a4?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+// }

@@ -118,12 +118,18 @@ export default function Navbar({ location }: Props) {
           onChange={(e) => handleChange(e.target.value)}
           onSubmit={handleSubmitSearch}
         />
+        <SuggestionBoxResponsive
+          show={show}
+          suggestions={suggestions}
+          handleSugestionClick={handleSugestionClick}
+          error={error}
+        />
       </div>
     </nav>
   );
 }
 
-function SuggestionBox({
+const SuggestionBox = ({
   show,
   suggestions,
   handleSugestionClick,
@@ -133,7 +139,7 @@ function SuggestionBox({
   suggestions: string[];
   handleSugestionClick: (item: string) => void;
   error: string;
-}) {
+}) => {
   return (
     <>
       {((show && suggestions.length > 0) || error) && (
@@ -155,4 +161,39 @@ function SuggestionBox({
       )}
     </>
   );
-}
+};
+
+
+const SuggestionBoxResponsive = ({
+  show,
+  suggestions,
+  handleSugestionClick,
+  error,
+}: {
+  show: boolean;
+  suggestions: string[];
+  handleSugestionClick: (item: string) => void;
+  error: string;
+}) => {
+  return (
+    <>
+      {((show && suggestions.length > 0) || error) && (
+        <ul className=" mb-4 bg-white absolute border top-[120px] left-[10px] border-gray-300 rounded-md w-[80%] sm:min-w-[200px] flex flex-col gap-1 py-2 px-2">
+          {error && suggestions.length < 1 && (
+            <li className=" text-red-500 p-1">{error}</li>
+          )}
+
+          {suggestions.map((ele, ind) => (
+            <li
+              className=" cursor-pointer p-1 rounded hover:bg-gray-200"
+              key={ind}
+              onClick={() => handleSugestionClick(ele)}
+            >
+              {ele}
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  );
+};
