@@ -122,13 +122,13 @@ export default function Home() {
   return (
     <div
       className={`flex flex-col gap-4 min-h-screen bg-gray-100 bg-cover ${setBG(
-        data?.list[0]?.weather[0].description ?? "few clouds"
+        data?.list[0]?.weather[0].description ?? "snow"
       )}`}
     >
       <Navbar location={data?.city?.name} />
       <main className=" px-3 max-w-7xl mx-auto flex flex-col gap-9 w-full pb-10 pt-4 ">
         {/* Today Section */}
-s
+
         <section className=" space-y-4">
           <div className=" space-y-4">
             <h2 className=" flex gap-1 text-2xl items-end text-white">
